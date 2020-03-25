@@ -6,7 +6,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 **Step 1**\
 Generate ANTLR Recognizer.  
-`antlr4 -o ...krajis\gen\org\timekeeper\parser -package org.timekeeper.parser -Dlanguage=Java -listener -visitor -lib ...krajis\src\main\kotlin\org\timekeeper\parser .../krajis/src/main/kotlin/org/timekeeper/parser\JavaScriptLexer.g4`
+`antlr4 -o ...krajis\gen\org\timekeeper\parser -package org.timekeeper.parser -Dlanguage=Java -listener -visitor -lib ...krajis\src\main\kotlin\org\timekeeper\parser .../krajis/src/main/kotlin/org/timekeeper/parser\JavaScriptLexer.g4` 
+
 **Step 2**\
 Run main() in Main.kt. Write code in console and enter Ctrl + D to execute.
 
