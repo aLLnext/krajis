@@ -13,6 +13,8 @@ Generate ANTLR Recognizer.
 **Step 2**\
 Run main() in Main.kt. Write code in console and enter Ctrl + D to execute.
 
+## Sources
+* JavaScript grammar - [ANTLR GRAMMAR](https://github.com/antlr/grammars-v4/tree/master/javascript/javascript)
 
 ## Build with 
 * Maven - Dependancy Management
