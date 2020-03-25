@@ -34,21 +34,17 @@ channels { ERROR }
 
 options { superClass=JavaScriptBaseLexer; }
 
-@header {
-    #include "../JavaScriptBaseLexer.h"
-}
-
-HashBangLine:                   { this->IsStartOfFile()}? '#!' ~[\r\n\u2028\u2029]*; // only allowed at start
+HashBangLine:                   { this.IsStartOfFile()}? '#!' ~[\r\n\u2028\u2029]*; // only allowed at start
 MultiLineComment:               '/*' .*? '*/'             -> channel(HIDDEN);
 SingleLineComment:              '//' ~[\r\n\u2028\u2029]* -> channel(HIDDEN);
-RegularExpressionLiteral:       '/' RegularExpressionFirstChar RegularExpressionChar* {this->IsRegexPossible()}? '/' IdentifierPart*;/*Не планируемое к реализации.*/
+RegularExpressionLiteral:       '/' RegularExpressionFirstChar RegularExpressionChar* {this.IsRegexPossible()}? '/' IdentifierPart*; /*Не планируемое к реализации.*/
 
 OpenBracket:                    '[';
 CloseBracket:                   ']';
 OpenParen:                      '(';
 CloseParen:                     ')';
-OpenBrace:                      '{' {this->ProcessOpenBrace();};
-CloseBrace:                     '}' {this->ProcessCloseBrace();};
+OpenBrace:                      '{' {this.ProcessOpenBrace();};
+CloseBrace:                     '}' {this.ProcessCloseBrace();};
 SemiColon:                      ';';
 Comma:                          ',';
 Assign:                         '=';
@@ -117,7 +113,7 @@ DecimalLiteral:                 DecimalIntegerLiteral '.' [0-9] [0-9_]* Exponent
 /// Numeric Literals
 
 HexIntegerLiteral:              '0' [xX] [0-9a-fA-F] HexDigit*;
-OctalIntegerLiteral:            '0' [0-7]+ {!this->IsStrictMode()}?;
+OctalIntegerLiteral:            '0' [0-7]+ {!this.IsStrictMode()}?;
 OctalIntegerLiteral2:           '0' [oO] [0-7] [_0-7]*;
 BinaryIntegerLiteral:           '0' [bB] [01] [_01]*;
 
@@ -173,26 +169,26 @@ Await:                          'await';/*Не планируемое к реа�
 /// The following tokens are also considered to be FutureReservedWords
 /// when parsing strict mode
 
-Implements:                     'implements' {this->IsStrictMode()}?;/*Не планируемое к реализации.*/
-Let:                            'let' {this->IsStrictMode()}?;/*Не планируемое к реализации.*/
-Private:                        'private' {this->IsStrictMode()}?;
-Public:                         'public' {this->IsStrictMode()}?;
-Interface:                      'interface' {this->IsStrictMode()}?;/*Не планируемое к реализации.*/
-Package:                        'package' {this->IsStrictMode()}?;/*Не планируемое к реализации.*/
-Protected:                      'protected' {this->IsStrictMode()}?;
-Static:                         'static' {this->IsStrictMode()}?;
-Yield:                          'yield' {this->IsStrictMode()}?;/*Не планируемое к реализации.*/
+Implements:                     'implements' {this.IsStrictMode()}?;/*Не планируемое к реализации.*/
+Let:                            'let' {this.IsStrictMode()}?;/*Не планируемое к реализации.*/
+Private:                        'private' {this.IsStrictMode()}?;
+Public:                         'public' {this.IsStrictMode()}?;
+Interface:                      'interface' {this.IsStrictMode()}?;/*Не планируемое к реализации.*/
+Package:                        'package' {this.IsStrictMode()}?;/*Не планируемое к реализации.*/
+Protected:                      'protected' {this.IsStrictMode()}?;
+Static:                         'static' {this.IsStrictMode()}?;
+Yield:                          'yield' {this.IsStrictMode()}?; /*Не планируемое к реализации.*/
 
 /// Identifier Names and Identifiers
 
 Identifier:                     IdentifierStart IdentifierPart*;
 /// String Literals
 StringLiteral:                 ('"' DoubleStringCharacter* '"'
-             |                  '\'' SingleStringCharacter* '\'') {this->ProcessStringLiteral();}
+             |                  '\'' SingleStringCharacter* '\'') {this.ProcessStringLiteral();}
              ;
 
 // TODO: `${`tmp`}`
-TemplateStringLiteral:          '`' ('\\`' | ~'`')* '`';/*Не планируемое к реализации.*/
+TemplateStringLiteral:          '`' ('\\`' | ~'`')* '`'; /*Не планируемое к реализации.*/
 
 WhiteSpaces:                    [\t\u000B\u000C\u0020\u00A0]+ -> channel(HIDDEN);
 
@@ -212,13 +208,11 @@ fragment DoubleStringCharacter
     | '\\' EscapeSequence
     | LineContinuation
     ;
-
 fragment SingleStringCharacter
     : ~['\\\r\n]
     | '\\' EscapeSequence
     | LineContinuation
     ;
-
 fragment EscapeSequence
     : CharacterEscapeSequence
     | '0' // no digit ahead! TODO
@@ -226,25 +220,20 @@ fragment EscapeSequence
     | UnicodeEscapeSequence
     | ExtendedUnicodeEscapeSequence
     ;
-
 fragment CharacterEscapeSequence
     : SingleEscapeCharacter
     | NonEscapeCharacter
     ;
-
 fragment HexEscapeSequence
     : 'x' HexDigit HexDigit
     ;
-
 fragment UnicodeEscapeSequence
     : 'u' HexDigit HexDigit HexDigit HexDigit
     | 'u' '{' HexDigit HexDigit+ '}'
     ;
-
 fragment ExtendedUnicodeEscapeSequence
     : 'u' '{' HexDigit+ '}'
     ;
-
 fragment SingleEscapeCharacter
     : ['"\\bfnrtv]
     ;
@@ -252,30 +241,24 @@ fragment SingleEscapeCharacter
 fragment NonEscapeCharacter
     : ~['"\\bfnrtv0-9xu\r\n]
     ;
-
 fragment EscapeCharacter
     : SingleEscapeCharacter
     | [0-9]
     | [xu]
     ;
-
 fragment LineContinuation
     : '\\' [\r\n\u2028\u2029]
     ;
-
 fragment HexDigit
     : [_0-9a-fA-F]
     ;
-
 fragment DecimalIntegerLiteral
     : '0'
     | [1-9] [0-9_]*
     ;
-
 fragment ExponentPart
     : [eE] [+-]? [0-9_]+
     ;
-
 fragment IdentifierPart
     : IdentifierStart
     | UnicodeCombiningMark
@@ -284,13 +267,11 @@ fragment IdentifierPart
     | '\u200C'
     | '\u200D'
     ;
-
 fragment IdentifierStart
     : UnicodeLetter
     | [$_]
     | '\\' UnicodeEscapeSequence
     ;
-
 fragment UnicodeLetter
     : [\u0041-\u005A]
     | [\u0061-\u007A]
@@ -552,7 +533,6 @@ fragment UnicodeLetter
     | [\uFFD2-\uFFD7]
     | [\uFFDA-\uFFDC]
     ;
-
 fragment UnicodeCombiningMark
     : [\u0300-\u034E]
     | [\u0360-\u0362]
@@ -655,7 +635,6 @@ fragment UnicodeCombiningMark
     | [\uFB1E]
     | [\uFE20-\uFE23]
     ;
-
 fragment UnicodeDigit
     : [\u0030-\u0039]
     | [\u0660-\u0669]
@@ -678,7 +657,6 @@ fragment UnicodeDigit
     | [\u1810-\u1819]
     | [\uFF10-\uFF19]
     ;
-
 fragment UnicodeConnectorPunctuation
     : [\u005F]
     | [\u203F-\u2040]
@@ -688,24 +666,20 @@ fragment UnicodeConnectorPunctuation
     | [\uFF3F]
     | [\uFF65]
     ;
-
 fragment RegularExpressionFirstChar
     : ~[*\r\n\u2028\u2029\\/[]
     | RegularExpressionBackslashSequence
     | '[' RegularExpressionClassChar* ']'
     ;
-
 fragment RegularExpressionChar
     : ~[\r\n\u2028\u2029\\/[]
     | RegularExpressionBackslashSequence
     | '[' RegularExpressionClassChar* ']'
     ;
-
 fragment RegularExpressionClassChar
     : ~[\r\n\u2028\u2029\]\\]
     | RegularExpressionBackslashSequence
     ;
-
 fragment RegularExpressionBackslashSequence
     : '\\' ~[\r\n\u2028\u2029]
     ;

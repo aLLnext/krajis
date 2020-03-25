@@ -35,10 +35,6 @@ options {
     superClass=JavaScriptBaseParser;
 }
 
-@header {
-    #include "../JavaScriptBaseParser.h"
-}
-
 program
     : HashBangLine? sourceElements? EOF
     ;
@@ -62,7 +58,7 @@ statement
     | returnStatement
     | yieldStatement
     | withStatement
-//    | labelledStatement /*Не планируемое к реализации.*/
+    | labelledStatement
     | switchStatement
     | throwStatement
     | tryStatement
@@ -140,7 +136,7 @@ emptyStatement
     ;
 
 expressionStatement
-    : {this->notOpenBraceAndNotFunction()}? expressionSequence eos
+    : {this.notOpenBraceAndNotFunction()}? expressionSequence eos
     ;
 
 ifStatement
@@ -153,8 +149,8 @@ iterationStatement
     | While '(' expressionSequence ')' statement                                                                        # WhileStatement
     | For '(' (expressionSequence | variableDeclarationList)? ';' expressionSequence? ';' expressionSequence? ')' statement   # ForStatement
     | For '(' (singleExpression | variableDeclarationList) In expressionSequence ')' statement                                # ForInStatement
-    // strange, 'of' is an identifier. and this->p("of") not work in sometime.
-    | For Await? '(' (singleExpression | variableDeclarationList) Identifier{this->p("of")}? expressionSequence ')' statement  # ForOfStatement
+    // strange, 'of' is an identifier. and this.p("of") not work in sometime.
+    | For Await? '(' (singleExpression | variableDeclarationList) Identifier{this.p("of")}? expressionSequence ')' statement  # ForOfStatement
     ;
 
 varModifier  // let, const - ECMAScript 6
@@ -164,54 +160,54 @@ varModifier  // let, const - ECMAScript 6
     ;
 
 continueStatement
-    : Continue ({this->notLineTerminator()}? Identifier)? eos
+    : Continue ({this.notLineTerminator()}? Identifier)? eos
     ;
 
 breakStatement
-    : Break ({this->notLineTerminator()}? Identifier)? eos
+    : Break ({this.notLineTerminator()}? Identifier)? eos
     ;
 
 returnStatement
-    : Return ({this->notLineTerminator()}? expressionSequence)? eos
+    : Return ({this.notLineTerminator()}? expressionSequence)? eos
     ;
 
 yieldStatement
-    : Yield ({this->notLineTerminator()}? expressionSequence)? eos
+    : Yield ({this.notLineTerminator()}? expressionSequence)? eos
     ;
 
 withStatement
     : With '(' expressionSequence ')' statement
     ;
 
-switchStatement
+switchStatement /*Не планируемое к реализации.*/
     : Switch '(' expressionSequence ')' caseBlock
     ;
 
-caseBlock
+caseBlock /*Не планируемое к реализации.*/
     : '{' caseClauses? (defaultClause caseClauses?)? '}'
     ;
 
-caseClauses
+caseClauses /*Не планируемое к реализации.*/
     : caseClause+
     ;
 
-caseClause
+caseClause /*Не планируемое к реализации.*/
     : Case expressionSequence ':' statementList?
     ;
 
-defaultClause
+defaultClause /*Не планируемое к реализации.*/
     : Default ':' statementList?
     ;
 
-labelledStatement/*Не планируемое к реализации.*/
+labelledStatement /*Не планируемое к реализации.*/
     : Identifier ':' statement
     ;
 
-throwStatement
-    : Throw {this->notLineTerminator()}? expressionSequence eos
+throwStatement /*Не планируемое к реализации.*/
+    : Throw {this.notLineTerminator()}? expressionSequence eos
     ;
 
-tryStatement
+tryStatement /*Не планируемое к реализации.*/
     : Try block (catchProduction finallyProduction? | finallyProduction)
     ;
 
@@ -240,7 +236,7 @@ classTail
     ;
 
 classElement
-    : (Static | {this->n("static")}? Identifier | Async)* methodDefinition
+    : (Static | {this.n("static")}? Identifier | Async)* methodDefinition
     | emptyStatement
     | '#'? propertyName '=' singleExpression
     ;
@@ -324,8 +320,8 @@ singleExpression
     | singleExpression arguments                                            # ArgumentsExpression
     | New singleExpression arguments?                                       # NewExpression
     | New '.' Identifier                                                    # MetaExpression // new.target
-    | singleExpression {this->notLineTerminator()}? '++'                     # PostIncrementExpression
-    | singleExpression {this->notLineTerminator()}? '--'                     # PostDecreaseExpression
+    | singleExpression {this.notLineTerminator()}? '++'                     # PostIncrementExpression
+    | singleExpression {this.notLineTerminator()}? '--'                     # PostDecreaseExpression
     | Delete singleExpression                                               # DeleteExpression
     | Void singleExpression                                                 # VoidExpression
     | Typeof singleExpression                                               # TypeofExpression
@@ -489,16 +485,18 @@ keyword
     ;
 
 getter
-    : Identifier {this->p("get")}? propertyName
+    : Identifier {this.p("get")}? propertyName
     ;
 
 setter
-    : Identifier {this->p("set")}? propertyName
+    : Identifier {this.p("set")}? propertyName
     ;
 
 eos
     : SemiColon
     | EOF
-    | {this->lineTerminatorAhead()}?
-    | {this->closeBrace()}?
+    | {this.lineTerminatorAhead()}?
+    | {this.closeBrace()}?
     ;
+
+
