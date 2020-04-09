@@ -146,22 +146,22 @@ This:                           'this';
 With:                           'with';/*Не планируемое к реализации.*/
 Default:                        'default';
 If:                             'if';
-Throw:                          'throw';
+Throw:                          'throw'; /*Не планируемое к реализации.*/
 Delete:                         'delete';
 In:                             'in';
-Try:                            'try';
+Try:                            'try'; /*Не планируемое к реализации.*/
 As:                             'as';
 From:                           'from';
 
 /// Future Reserved Words
 
-Class:                          'class';
+Class:                          'class'; /*Не планируемое к реализации.*/
 Enum:                           'enum';
-Extends:                        'extends';
-Super:                          'super';
+Extends:                        'extends'; /*Не планируемое к реализации.*/
+Super:                          'super'; /*Не планируемое к реализации.*/
 Const:                          'const';
-Export:                         'export';
-Import:                         'import';
+Export:                         'export'; /*Не планируемое к реализации.*/
+Import:                         'import'; /*Не планируемое к реализации.*/
 
 Async:                          'async';/*Не планируемое к реализации.*/
 Await:                          'await';/*Не планируемое к реализации.*/
