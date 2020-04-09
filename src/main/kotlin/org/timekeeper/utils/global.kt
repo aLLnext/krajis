@@ -1,3 +1,55 @@
 package org.timekeeper.utils
 
-val REPORT_SYNTAX_ERRORS = true
+import org.antlr.v4.runtime.RuleContext
+import org.antlr.v4.runtime.tree.ErrorNode
+import org.antlr.v4.runtime.tree.ParseTree
+import org.antlr.v4.runtime.tree.TerminalNode
+import org.timekeeper.grammar.JavaScriptParser
+
+const val REPORT_SYNTAX_ERRORS = true
+const val SYMBOL_CROSS = " ├─"
+const val SYMBOL_CORNER = " └─"
+const val SYMBOL_VERTICAL = " │ "
+const val SYMBOL_SPACE = "   "
+
+@Suppress("NAME_SHADOWING")
+fun ParseTree.printNode(indent: String, rules: List<String>) {
+    println(getNodeText(rules))
+
+    for (i in 0 until childCount) {
+        val child = getChild(i)
+        val isLast = i == (childCount - 1)
+        child.printChildNode(indent, isLast, rules)
+    }
+}
+
+fun ParseTree.printChildNode(indent: String, isLast: Boolean, rules: List<String>) {
+    var indent = indent
+    print(indent)
+    if (isLast) {
+        print(SYMBOL_CORNER)
+        indent += SYMBOL_SPACE
+    } else {
+        print(SYMBOL_CROSS)
+        indent += SYMBOL_VERTICAL
+    }
+    printNode(indent, rules)
+}
+
+fun ParseTree.getNodeText(rules: List<String>): String? {
+    when (this) {
+        is RuleContext -> {
+            val ruleIndex = this.ruleContext.ruleIndex
+            val alt = this.altNumber
+            return rules[ruleIndex]
+        }
+        is ErrorNode -> {
+            return this.toString()
+        }
+        is TerminalNode -> {
+            val token = this.symbol
+            return token.text
+        }
+    }
+    return null
+}
