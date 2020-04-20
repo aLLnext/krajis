@@ -4,7 +4,9 @@ import org.antlr.v4.runtime.RuleContext
 import org.antlr.v4.runtime.tree.ErrorNode
 import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.TerminalNode
-import org.timekeeper.grammar.JavaScriptParser
+import java.io.BufferedWriter
+import java.io.File
+import java.io.PrintWriter
 
 const val REPORT_SYNTAX_ERRORS = true
 const val SYMBOL_CROSS = " ├─"
@@ -12,7 +14,6 @@ const val SYMBOL_CORNER = " └─"
 const val SYMBOL_VERTICAL = " │ "
 const val SYMBOL_SPACE = "   "
 
-@Suppress("NAME_SHADOWING")
 fun ParseTree.printNode(indent: String, rules: List<String>) {
     println(getNodeText(rules))
 
@@ -23,6 +24,7 @@ fun ParseTree.printNode(indent: String, rules: List<String>) {
     }
 }
 
+@Suppress("NAME_SHADOWING")
 fun ParseTree.printChildNode(indent: String, isLast: Boolean, rules: List<String>) {
     var indent = indent
     print(indent)
@@ -40,7 +42,6 @@ fun ParseTree.getNodeText(rules: List<String>): String? {
     when (this) {
         is RuleContext -> {
             val ruleIndex = this.ruleContext.ruleIndex
-            val alt = this.altNumber
             return rules[ruleIndex]
         }
         is ErrorNode -> {
@@ -52,4 +53,24 @@ fun ParseTree.getNodeText(rules: List<String>): String? {
         }
     }
     return null
+}
+
+fun printlnWithBuffer(string: String?, out: File? = null) {
+    if (out != null) {
+        string?.let {
+            out.appendText(string + "\n")
+        }
+    } else {
+        println(string)
+    }
+}
+
+fun printWithBUffer(string: String?, out: File? = null) {
+    if (out != null) {
+        string?.let {
+            out.appendText(string)
+        }
+    } else {
+        print(string)
+    }
 }

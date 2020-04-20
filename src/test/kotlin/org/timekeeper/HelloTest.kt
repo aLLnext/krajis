@@ -5,4 +5,8 @@ import kotlin.test.assertEquals
 
 class HelloTest {
 
+    @Test
+    fun helloWolrd() {
+        assertEquals("hello", "hello")
+    }
 }
