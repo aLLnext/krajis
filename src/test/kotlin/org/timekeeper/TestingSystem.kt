@@ -18,7 +18,7 @@ class TestingSystem {
         val correctAnswers = ArrayList<String>()
         val testAnswers = ArrayList<String>()
 
-        File(TEST_PATH).walkTopDown().forEachIndexed { index, it ->
+        File(TEST_PATH).walkTopDown().forEach {
             if (it.isFile.and(".js".toRegex().containsMatchIn(it.name))) {
                 val correctFile = File("${it.parent}\\tree_${it.name.subSequence(0, it.name.length - 2)}.res")
                 val tempFile = File("tempfile.res")

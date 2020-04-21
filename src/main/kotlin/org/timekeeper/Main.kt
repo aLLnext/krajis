@@ -1,16 +1,14 @@
 package org.timekeeper
 
-import org.antlr.runtime.ANTLRFileStream
-import org.antlr.runtime.ANTLRInputStream
+
+import JavaScriptLexer
+import JavaScriptParser
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
-import org.antlr.v4.runtime.Recognizer
 import org.timekeeper.grammar.*
 import org.timekeeper.utils.ConvertTreeVisitor
 import org.timekeeper.utils.TEST_PATH
-import org.timekeeper.utils.printNode
 import java.io.File
-import java.lang.StringBuilder
 
 fun main(args: Array<String>) {
 //    val str = "if (y < x);"
@@ -34,11 +32,11 @@ fun main(args: Array<String>) {
 //    println()
 
 //    val n = tree.accept(convertVisitor)
-//    val convertVisitor = ConvertTreeVisitor()
-//    val tree = Initialization().createLexerAndParser("日本語 = []").program()
-//    val n = tree.accept(convertVisitor)
-//    n?.printParentNode("")
-    Initialization().updateTrees()
+    val convertVisitor = ConvertTreeVisitor()
+    val tree = Initialization().createLexerAndParser("日本語 = []").program()
+    val n = tree.accept(convertVisitor)
+    n?.printParentNode("")
+    //Initialization().updateTrees()
 }
 
 class Initialization() {

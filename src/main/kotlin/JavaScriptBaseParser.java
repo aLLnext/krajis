@@ -1,5 +1,3 @@
-package org.timekeeper.grammar;
-
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.Token;

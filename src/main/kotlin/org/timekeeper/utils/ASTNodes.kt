@@ -1,8 +1,6 @@
 package org.timekeeper.utils
 
 import org.antlr.v4.runtime.ParserRuleContext
-import org.timekeeper.grammar.JavaScriptParser
-import org.timekeeper.grammar.JavaScriptParserBaseVisitor
 import org.timekeeper.utils.OperatorsUtils.OPERATORS
 import java.io.BufferedWriter
 import java.io.Console
@@ -339,9 +337,9 @@ class UnaryExpression(ctx: ParserRuleContext?, val operator: OPERATORS?, val arg
     BaseNode("UnaryExpression", ctx) {
 
     override fun printNode(indent: String, out: File?) {
-        var ind = super.printChildNode(indent, false, out)
+        super.printChildNode(indent, false, out)
         printlnWithBuffer("operator: ${operator?.value}", out)
-        ind = super.printChildNode(indent, true, out)
+        val ind = super.printChildNode(indent, true, out)
         printWithBUffer("argument: ", out)
         argument?.printParentNode(ind, out)
     }
