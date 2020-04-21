@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/krajis
     docker:
-      - image: circleci/openjdk:8-jdk-stretch
+      - image: circleci/openjdk:8-jdk
     steps:
       - checkout
       - restore_cache:
