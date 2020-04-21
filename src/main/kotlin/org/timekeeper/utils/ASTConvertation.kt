@@ -1,9 +1,8 @@
 package org.timekeeper.utils
 
+import JavaScriptParserBaseVisitor
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.tree.*
-import org.timekeeper.grammar.JavaScriptParser
-import org.timekeeper.grammar.JavaScriptParserBaseVisitor
 import org.timekeeper.utils.OperatorsUtils.*
 import org.timekeeper.utils.OperatorsUtils.Companion.OPERATORS_SIGN
 
