@@ -20,8 +20,8 @@ class TestingSystem {
 
         File(TEST_PATH).walkTopDown().forEach {
             if (it.isFile.and(".js".toRegex().containsMatchIn(it.name))) {
-                val correctFile = File("${it.parent}\\tree_${it.name.subSequence(0, it.name.length - 2)}.res")
-                val tempFile = File("${it.parent}\\tempfile.res")
+                val correctFile = File("${it.parent}/tree_${it.name.subSequence(0, it.name.length - 2)}.res")
+                val tempFile = File("${it.parent}/tempfile.res")
                 tempFile.delete()
                 val parser = Initialization().createLexerAndParser(it.readText())
                 val result = parser.program().accept(convertVisitor)
