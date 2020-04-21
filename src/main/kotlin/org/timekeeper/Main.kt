@@ -32,11 +32,13 @@ fun main(args: Array<String>) {
 //    println()
 
 //    val n = tree.accept(convertVisitor)
-    val convertVisitor = ConvertTreeVisitor()
-    val tree = Initialization().createLexerAndParser("日本語 = []").program()
-    val n = tree.accept(convertVisitor)
-    n?.printParentNode("")
-    //Initialization().updateTrees()
+//    val convertVisitor = ConvertTreeVisitor()
+//    val str = "Hello\\" +
+//    "world"
+//    val tree = Initialization().createLexerAndParser(str).program()
+//    val n = tree.accept(convertVisitor)
+//    n?.printParentNode("")
+    Initialization().updateTrees()
 }
 
 class Initialization() {
