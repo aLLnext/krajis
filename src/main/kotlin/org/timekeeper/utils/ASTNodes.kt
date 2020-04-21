@@ -18,20 +18,20 @@ open class BaseNode(
     var end = ctx?.stop?.stopIndex
 
 
-    open fun printNode(indent: String, out: File?) {}
+    open fun printNode(indent: String, out: File? = null) {}
 
     //        println(type)
 //        children?.forEachIndexed { index, it ->
 //            val isLast = index == (children!!.size - 1)
 //            it.printChildNode(indent, isLast)
 //        }
-    fun printParentNode(indent: String, out: File?) {
+    fun printParentNode(indent: String, out: File? = null) {
         printlnWithBuffer(type, out)
         printNode(indent, out)
     }
 
     @Suppress("NAME_SHADOWING")
-    fun printChildNode(indent: String, isLast: Boolean, out: File?): String {
+    fun printChildNode(indent: String, isLast: Boolean, out: File? = null): String {
         var indent = indent
         printWithBUffer(indent, out)
         if (isLast) {

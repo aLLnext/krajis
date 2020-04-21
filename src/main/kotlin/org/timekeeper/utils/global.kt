@@ -9,6 +9,8 @@ import java.io.File
 import java.io.PrintWriter
 
 const val REPORT_SYNTAX_ERRORS = true
+const val TEST_PATH = "src/test/kotlin/org/timekeeper/test_suits"
+
 const val SYMBOL_CROSS = " ├─"
 const val SYMBOL_CORNER = " └─"
 const val SYMBOL_VERTICAL = " │ "

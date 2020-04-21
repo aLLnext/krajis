@@ -1,6 +1,3 @@
-testing system
-version: 0.0.2
-test_case = var hello = function hi() { sayHi() };
 Program
  └─body
     └─VariableDeclaration

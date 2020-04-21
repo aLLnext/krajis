@@ -1,6 +1,3 @@
-testing system
-version: 0.0.2
-test_case = function test() { "42" + 42; }
 Program
  └─body
     └─FunctionDeclaration
