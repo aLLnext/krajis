@@ -1,37 +1,9 @@
-package org.timekeeper.utils
+package org.timekeeper.grammar
 
 import JavaScriptParserBaseVisitor
 import org.antlr.v4.runtime.ParserRuleContext
-import org.antlr.v4.runtime.tree.*
-import org.timekeeper.utils.OperatorsUtils.*
-import org.timekeeper.utils.OperatorsUtils.Companion.OPERATORS_SIGN
-
-class Node(
-    var name: String?,
-    var children: ArrayList<Node>? = null
-) {
-    fun printNode(indent: String) {
-        println(name)
-        children?.forEachIndexed { index, it ->
-            val isLast = index == (children!!.size - 1)
-            it.printChildNode(indent, isLast)
-        }
-    }
-
-    @Suppress("NAME_SHADOWING")
-    fun printChildNode(indent: String, isLast: Boolean) {
-        var indent = indent
-        print(indent)
-        if (isLast) {
-            print(SYMBOL_CORNER)
-            indent += SYMBOL_SPACE
-        } else {
-            print(SYMBOL_CROSS)
-            indent += SYMBOL_VERTICAL
-        }
-        printNode(indent)
-    }
-}
+import org.timekeeper.grammar.OperatorsUtils.*
+import org.timekeeper.grammar.OperatorsUtils.Companion.OPERATORS_SIGN
 
 
 class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
@@ -75,7 +47,10 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
     }
 
     override fun visitExpressionStatement(ctx: JavaScriptParser.ExpressionStatementContext?): BaseNode? {
-        return ExpressionStatement(ctx, expression = ctx?.expressionSequence()?.accept(this))
+        return ExpressionStatement(
+            ctx,
+            expression = ctx?.expressionSequence()?.accept(this)
+        )
     }
 
     override fun visitIfStatement(ctx: JavaScriptParser.IfStatementContext?): BaseNode? {
@@ -99,7 +74,9 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
         if (ctx?.singleExpression()?.size == 1) {
             return ctx.singleExpression(0)?.accept(this)
         }
-        return SequenceExpression(ctx, expressions = ctx?.singleExpression()?.map { it.accept(this) })
+        return SequenceExpression(
+            ctx,
+            expressions = ctx?.singleExpression()?.map { it.accept(this) })
     }
 
     override fun visitLogicalAndExpression(ctx: JavaScriptParser.LogicalAndExpressionContext?): BaseNode? {
@@ -172,6 +149,9 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
         if (ctx?.StringLiteral() != null) {
             return StringLiteral(ctx)
         }
+        if (ctx?.TemplateStringLiteral() != null) {
+            return TemplateStringLiteral(ctx)
+        }
         return NumericLiteral(ctx)
     }
 
@@ -209,11 +189,19 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
     }
 
     override fun visitNotExpression(ctx: JavaScriptParser.NotExpressionContext?): BaseNode? {
-        return UnaryExpression(ctx, operator = OPERATORS.LogicalNot, argument = ctx?.singleExpression()?.accept(this))
+        return UnaryExpression(
+            ctx,
+            operator = OPERATORS.LogicalNot,
+            argument = ctx?.singleExpression()?.accept(this)
+        )
     }
 
     override fun visitBitNotExpression(ctx: JavaScriptParser.BitNotExpressionContext?): BaseNode? {
-        return UnaryExpression(ctx, operator = OPERATORS.BitwiseNot, argument = ctx?.singleExpression()?.accept(this))
+        return UnaryExpression(
+            ctx,
+            operator = OPERATORS.BitwiseNot,
+            argument = ctx?.singleExpression()?.accept(this)
+        )
     }
 
     override fun visitBitShiftExpression(ctx: JavaScriptParser.BitShiftExpressionContext?): BaseNode? {
@@ -225,19 +213,31 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
     }
 
     override fun visitParenthesizedExpression(ctx: JavaScriptParser.ParenthesizedExpressionContext?): BaseNode? {
-        return ExpressionStatement(ctx, expression = ctx?.expressionSequence()?.accept(this))
+        return ExpressionStatement(
+            ctx,
+            expression = ctx?.expressionSequence()?.accept(this)
+        )
     }
 
     override fun visitArrayLiteral(ctx: JavaScriptParser.ArrayLiteralContext?): BaseNode? {
-        return ArrayExpression(ctx, elements = getChildren(ctx?.elementList()))
+        return ArrayExpression(
+            ctx,
+            elements = getChildren(ctx?.elementList())
+        )
     }
 
     override fun visitObjectLiteralExpression(ctx: JavaScriptParser.ObjectLiteralExpressionContext?): BaseNode? {
-        return ObjectExpression(ctx, properties = ctx?.objectLiteral()?.propertyAssignment()?.map { it?.accept(this) })
+        return ObjectExpression(
+            ctx,
+            properties = ctx?.objectLiteral()?.propertyAssignment()?.map { it?.accept(this) })
     }
 
     override fun visitPropertyExpressionAssignment(ctx: JavaScriptParser.PropertyExpressionAssignmentContext?): BaseNode? {
-        return Property(ctx, key = ctx?.propertyName()?.accept(this), value = ctx?.singleExpression()?.accept(this))
+        return Property(
+            ctx,
+            key = ctx?.propertyName()?.accept(this),
+            value = ctx?.singleExpression()?.accept(this)
+        )
     }
 
     override fun visitEmptyStatement(ctx: JavaScriptParser.EmptyStatementContext?): BaseNode? {
@@ -254,7 +254,10 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
     }
 
     override fun visitReturnStatement(ctx: JavaScriptParser.ReturnStatementContext?): BaseNode? {
-        return ReturnStatement(ctx, argument = ctx?.expressionSequence()?.accept(this))
+        return ReturnStatement(
+            ctx,
+            argument = ctx?.expressionSequence()?.accept(this)
+        )
     }
 
     override fun visitFunctionBody(ctx: JavaScriptParser.FunctionBodyContext?): BaseNode? {
@@ -282,7 +285,11 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
     }
 
     override fun visitDeleteExpression(ctx: JavaScriptParser.DeleteExpressionContext?): BaseNode? {
-        return UnaryExpression(ctx, OPERATORS.Delete, argument = ctx?.singleExpression()?.accept(this))
+        return UnaryExpression(
+            ctx,
+            OPERATORS.Delete,
+            argument = ctx?.singleExpression()?.accept(this)
+        )
     }
 
     override fun visitMemberDotExpression(ctx: JavaScriptParser.MemberDotExpressionContext?): BaseNode? {
@@ -311,11 +318,19 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
     }
 
     override fun visitUnaryMinusExpression(ctx: JavaScriptParser.UnaryMinusExpressionContext?): BaseNode? {
-        return UnaryExpression(ctx, operator = OPERATORS.Minus, argument = ctx?.singleExpression()?.accept(this))
+        return UnaryExpression(
+            ctx,
+            operator = OPERATORS.Minus,
+            argument = ctx?.singleExpression()?.accept(this)
+        )
     }
 
     override fun visitUnaryPlusExpression(ctx: JavaScriptParser.UnaryPlusExpressionContext?): BaseNode? {
-        return UnaryExpression(ctx, operator = OPERATORS.Plus, argument = ctx?.singleExpression()?.accept(this))
+        return UnaryExpression(
+            ctx,
+            operator = OPERATORS.Plus,
+            argument = ctx?.singleExpression()?.accept(this)
+        )
     }
 
     override fun visitDoStatement(ctx: JavaScriptParser.DoStatementContext?): BaseNode? {
@@ -337,5 +352,13 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
             return ctx.identifierName()?.accept(this)
         }
         return ctx?.singleExpression()?.accept(this)
+    }
+
+    override fun visitArrowFunction(ctx: JavaScriptParser.ArrowFunctionContext?): BaseNode? {
+        return ArrowFunctionExpression(
+            ctx,
+            params = getChildren(ctx?.arrowFunctionParameters()),
+            body = ctx?.arrowFunctionBody()?.accept(this)
+        )
     }
 }

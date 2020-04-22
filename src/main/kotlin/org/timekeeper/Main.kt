@@ -6,7 +6,7 @@ import JavaScriptParser
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 import org.timekeeper.grammar.*
-import org.timekeeper.utils.ConvertTreeVisitor
+import org.timekeeper.grammar.ConvertTreeVisitor
 import org.timekeeper.utils.TEST_PATH
 import java.io.File
 
@@ -33,8 +33,9 @@ fun main(args: Array<String>) {
 
 //    val n = tree.accept(convertVisitor)
 //    val convertVisitor = ConvertTreeVisitor()
-//    val str = "Hello\\" +
-//    "world"
+//    val str = "function printTips() {\n" +
+//            "  tips.forEach((tip, i) => console.log(`Tip \${i}:` + tip));\n" +
+//            "}\n"
 //    val tree = Initialization().createLexerAndParser(str).program()
 //    val n = tree.accept(convertVisitor)
 //    n?.printParentNode("")

@@ -2,7 +2,7 @@ package org.timekeeper
 
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
-import org.timekeeper.utils.ConvertTreeVisitor
+import org.timekeeper.grammar.ConvertTreeVisitor
 import org.timekeeper.utils.TEST_PATH
 import java.io.File
 import kotlin.test.assertEquals
