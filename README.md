@@ -26,7 +26,7 @@ Run in console `mvn package`
 * JavaScript grammar - [ANTLR GRAMMAR](https://github.com/antlr/grammars-v4/tree/master/javascript/javascript)
 
 ## Build with 
-* Maven - Dependancy Management
+* Maven - Dependency Management
 
 
 ## Authors
