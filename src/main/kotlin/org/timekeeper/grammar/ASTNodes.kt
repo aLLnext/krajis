@@ -426,6 +426,8 @@ class OperatorsUtils() {
                 Pair("&&", OPERATORS.LogicalAnd),
                 Pair("||", OPERATORS.LogicalOr),
                 Pair("===", OPERATORS.Equals),
+                Pair("==", OPERATORS.Equals),
+                Pair("!=", OPERATORS.NotEquals),
                 Pair("!==", OPERATORS.NotEquals),
                 Pair(">", OPERATORS.More),
                 Pair(">=", OPERATORS.MoreOrEqual),

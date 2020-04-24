@@ -24,7 +24,7 @@ Program
                       └─right: BinaryExpression
                          ├─left: Identifier
                          │  └─name: f
-                         ├─operator: null
+                         ├─operator: ===
                          └─right: BinaryExpression
                             ├─left: Identifier
                             │  └─name: g

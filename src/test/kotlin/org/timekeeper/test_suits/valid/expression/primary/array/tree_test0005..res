@@ -10,5 +10,5 @@ Program
                 │  └─value: 1
                 ├─NumericLiteral
                 │  └─value: 2
-                ├─NumericLiteral
-                │  └─value: 3
+                └─NumericLiteral
+                   └─value: 3
