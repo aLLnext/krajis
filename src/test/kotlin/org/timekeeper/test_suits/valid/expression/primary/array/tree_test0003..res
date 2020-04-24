@@ -6,5 +6,5 @@ Program
           │  └─name: x
           └─right: ArrayExpression
              └─elements
-                ├─NumericLiteral
-                │  └─value: 42
+                └─NumericLiteral
+                   └─value: 42

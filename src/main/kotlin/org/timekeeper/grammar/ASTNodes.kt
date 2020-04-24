@@ -1,11 +1,9 @@
-package org.timekeeper.utils
+package org.timekeeper.grammar
 
 import org.antlr.v4.runtime.ParserRuleContext
-import org.timekeeper.utils.OperatorsUtils.OPERATORS
-import java.io.BufferedWriter
-import java.io.Console
+import org.timekeeper.grammar.OperatorsUtils.OPERATORS
+import org.timekeeper.utils.*
 import java.io.File
-import java.io.PrintWriter
 
 open class BaseNode(
     val type: String?,
@@ -33,10 +31,16 @@ open class BaseNode(
         var indent = indent
         printWithBUffer(indent, out)
         if (isLast) {
-            printWithBUffer(SYMBOL_CORNER, out)
+            printWithBUffer(
+                SYMBOL_CORNER,
+                out
+            )
             indent += SYMBOL_SPACE
         } else {
-            printWithBUffer(SYMBOL_CROSS, out)
+            printWithBUffer(
+                SYMBOL_CROSS,
+                out
+            )
             indent += SYMBOL_VERTICAL
         }
         return indent
@@ -79,6 +83,8 @@ class BooleanLiteral(ctx: ParserRuleContext?) : Literal("BooleanLiteral", ctx)
 class NumericLiteral(ctx: ParserRuleContext?) : Literal("NumericLiteral", ctx)
 
 class NullLiteral(ctx: ParserRuleContext?) : Literal("NullLiteral", ctx)
+
+class TemplateStringLiteral(ctx: ParserRuleContext?) : Literal("TemplateStringLiteral", ctx)
 
 class VariableDeclaration(ctx: ParserRuleContext?, val declatarions: List<BaseNode?>?, val kind: String?) :
     BaseNode("VariableDeclaration", ctx) {
@@ -159,8 +165,7 @@ class AssignmentExpression(ctx: ParserRuleContext?, val left: BaseNode?, val rig
     }
 }
 
-class EmptyStatement(ctx: ParserRuleContext?) : BaseNode("EmptyStatemenet", ctx)
-
+class EmptyStatement(ctx: ParserRuleContext?) : BaseNode("EmptyStatement", ctx)
 
 class IfStatement(ctx: ParserRuleContext?, val test: BaseNode?, val consequent: BaseNode?, val alternative: BaseNode?) :
     BaseNode("IfStatement", ctx) {
@@ -194,6 +199,25 @@ class SequenceExpression(ctx: ParserRuleContext?, val expressions: List<BaseNode
                 baseNode?.printParentNode(super.printChildNode(ind, index == expressions.size - 1, out), out)
             }
         }
+    }
+}
+
+class ArrowFunctionExpression(ctx: ParserRuleContext?, val params: List<BaseNode?>?, val body: BaseNode?) :
+    BaseNode("ArrowFunctionExpression", ctx) {
+
+    override fun printNode(indent: String, out: File?) {
+        var ind = super.printChildNode(indent, true, out)
+        if (params == null || params.isEmpty()) {
+            printlnWithBuffer("params: null", out)
+        } else {
+            printlnWithBuffer("params", out)
+            params.forEachIndexed { index, baseNode ->
+                baseNode?.printParentNode(super.printChildNode(ind, index == params.size - 1, out), out)
+            }
+        }
+        ind = super.printChildNode(indent, true, out)
+        printWithBUffer("body: ", out)
+        body?.printParentNode(ind, out)
     }
 }
 
@@ -291,18 +315,6 @@ class MemberExpression(ctx: ParserRuleContext?, val obj: BaseNode?, val property
         printWithBUffer("property: ", out)
         property?.printParentNode(ind, out)
     }
-}
-
-class ArrowFunctionExpression() {
-
-}
-
-class TemplateLiteral() {
-
-}
-
-class TemplateElement() {
-
 }
 
 class BreakStatement(ctx: ParserRuleContext?) : BaseNode("BreakStatement", ctx)
@@ -414,6 +426,8 @@ class OperatorsUtils() {
                 Pair("&&", OPERATORS.LogicalAnd),
                 Pair("||", OPERATORS.LogicalOr),
                 Pair("===", OPERATORS.Equals),
+                Pair("==", OPERATORS.Equals),
+                Pair("!=", OPERATORS.NotEquals),
                 Pair("!==", OPERATORS.NotEquals),
                 Pair(">", OPERATORS.More),
                 Pair(">=", OPERATORS.MoreOrEqual),
