@@ -7,7 +7,7 @@ Program
           └─right: ObjectExpression
              └─properties
                 └─Property
-kind: init
+                   ├─kind: init
                    ├─key: Identifier
                    │  └─name: true
                    └─value: NumericLiteral

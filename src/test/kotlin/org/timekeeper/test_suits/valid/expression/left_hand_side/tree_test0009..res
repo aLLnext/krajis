@@ -3,8 +3,11 @@ Program
     └─ExpressionStatement
        └─expression: CallExpression
           ├─callee: MemberExpression
+          │  ├─kind: DotMember
           │  ├─obj: MemberExpression
+          │  │  ├─kind: DotMember
           │  │  ├─obj: MemberExpression
+          │  │  │  ├─kind: DotMember
           │  │  │  ├─obj: Identifier
           │  │  │  │  └─name: earth
           │  │  │  └─property: Identifier

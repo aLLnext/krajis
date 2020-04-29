@@ -29,15 +29,15 @@ open class BaseNode(
     @Suppress("NAME_SHADOWING")
     fun printChildNode(indent: String, isLast: Boolean, out: File? = null): String {
         var indent = indent
-        printWithBUffer(indent, out)
+        printWithBuffer(indent, out)
         if (isLast) {
-            printWithBUffer(
+            printWithBuffer(
                 SYMBOL_CORNER,
                 out
             )
             indent += SYMBOL_SPACE
         } else {
-            printWithBUffer(
+            printWithBuffer(
                 SYMBOL_CROSS,
                 out
             )
@@ -105,10 +105,10 @@ class VariableDeclarator(ctx: ParserRuleContext?, val id: BaseNode?, val init: B
 
     override fun printNode(indent: String, out: File?) {
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("id: ", out)
+        printWithBuffer("id: ", out)
         id?.printParentNode(ind, out)
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("init: ", out)
+        printWithBuffer("init: ", out)
         init?.printParentNode(ind, out)
         if (init == null) {
             printlnWithBuffer("null", out)
@@ -125,10 +125,10 @@ class FunctionDeclaration(
 
     override fun printNode(indent: String, out: File?) {
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("id: ", out)
+        printWithBuffer("id: ", out)
         id?.printParentNode(ind, out)
         ind = super.printChildNode(indent, false, out)
-        printWithBUffer("body: ", out)
+        printWithBuffer("body: ", out)
         body?.printParentNode(ind, out)
         ind = super.printChildNode(indent, true, out)
         if (params == null || params.isEmpty()) {
@@ -147,7 +147,7 @@ class ExpressionStatement(ctx: ParserRuleContext?, val expression: BaseNode?) :
 
     override fun printNode(indent: String, out: File?) {
         val ind = super.printChildNode(indent, true, out)
-        printWithBUffer("expression: ", out)
+        printWithBuffer("expression: ", out)
         expression?.printParentNode(ind, out)
     }
 }
@@ -157,10 +157,10 @@ class AssignmentExpression(ctx: ParserRuleContext?, val left: BaseNode?, val rig
 
     override fun printNode(indent: String, out: File?) {
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("left: ", out)
+        printWithBuffer("left: ", out)
         left?.printParentNode(ind, out)
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("right: ", out)
+        printWithBuffer("right: ", out)
         right?.printParentNode(ind, out)
     }
 }
@@ -172,13 +172,13 @@ class IfStatement(ctx: ParserRuleContext?, val test: BaseNode?, val consequent: 
 
     override fun printNode(indent: String, out: File?) {
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("test: ", out)
+        printWithBuffer("test: ", out)
         test?.printParentNode(ind, out)
         ind = super.printChildNode(indent, false, out)
-        printWithBUffer("consequent: ", out)
+        printWithBuffer("consequent: ", out)
         consequent?.printParentNode(ind, out)
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("alternative: ", out)
+        printWithBuffer("alternative: ", out)
         alternative?.printParentNode(ind, out)
         if (alternative == null) {
             printlnWithBuffer("null", out)
@@ -206,7 +206,7 @@ class ArrowFunctionExpression(ctx: ParserRuleContext?, val params: List<BaseNode
     BaseNode("ArrowFunctionExpression", ctx) {
 
     override fun printNode(indent: String, out: File?) {
-        var ind = super.printChildNode(indent, true, out)
+        var ind = super.printChildNode(indent, false, out)
         if (params == null || params.isEmpty()) {
             printlnWithBuffer("params: null", out)
         } else {
@@ -216,7 +216,7 @@ class ArrowFunctionExpression(ctx: ParserRuleContext?, val params: List<BaseNode
             }
         }
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("body: ", out)
+        printWithBuffer("body: ", out)
         body?.printParentNode(ind, out)
     }
 }
@@ -280,7 +280,7 @@ class FunctionExpression(ctx: ParserRuleContext?, val params: List<BaseNode?>?, 
             }
         }
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("body: ", out)
+        printWithBuffer("body: ", out)
         body?.printParentNode(ind, out)
     }
 }
@@ -290,7 +290,7 @@ class CallExpression(ctx: ParserRuleContext?, val callee: BaseNode?, val argumen
 
     override fun printNode(indent: String, out: File?) {
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("callee: ", out)
+        printWithBuffer("callee: ", out)
         callee?.printParentNode(ind, out)
         ind = super.printChildNode(indent, true, out)
         if (arguments == null || arguments.isEmpty()) {
@@ -304,15 +304,17 @@ class CallExpression(ctx: ParserRuleContext?, val callee: BaseNode?, val argumen
     }
 }
 
-class MemberExpression(ctx: ParserRuleContext?, val obj: BaseNode?, val property: BaseNode?) :
+class MemberExpression(ctx: ParserRuleContext?, val obj: BaseNode?, val property: BaseNode?, val kind: String?) :
     BaseNode("MemberExpression", ctx) {
 
     override fun printNode(indent: String, out: File?) {
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("obj: ", out)
+        printlnWithBuffer("kind: $kind", out)
+        ind = super.printChildNode(indent, false, out)
+        printWithBuffer("obj: ", out)
         obj?.printParentNode(ind, out)
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("property: ", out)
+        printWithBuffer("property: ", out)
         property?.printParentNode(ind, out)
     }
 }
@@ -322,7 +324,7 @@ class BreakStatement(ctx: ParserRuleContext?) : BaseNode("BreakStatement", ctx)
 class ReturnStatement(ctx: ParserRuleContext?, val argument: BaseNode?) : BaseNode("ReturnStatement", ctx) {
     override fun printNode(indent: String, out: File?) {
         val ind = super.printChildNode(indent, false, out)
-        printWithBUffer("argument: ", out)
+        printWithBuffer("argument: ", out)
         argument?.printParentNode(ind, out)
         if (argument == null) {
             printlnWithBuffer("null", out)
@@ -335,10 +337,10 @@ class WhileStatement(ctx: ParserRuleContext?, val test: BaseNode?, val body: Bas
 
     override fun printNode(indent: String, out: File?) {
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("test: ", out)
+        printWithBuffer("test: ", out)
         test?.printParentNode(ind, out)
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("body: ", out)
+        printWithBuffer("body: ", out)
         body?.printParentNode(ind, out)
     }
 }
@@ -352,7 +354,7 @@ class UnaryExpression(ctx: ParserRuleContext?, val operator: OPERATORS?, val arg
         super.printChildNode(indent, false, out)
         printlnWithBuffer("operator: ${operator?.value}", out)
         val ind = super.printChildNode(indent, true, out)
-        printWithBUffer("argument: ", out)
+        printWithBuffer("argument: ", out)
         argument?.printParentNode(ind, out)
     }
 }
@@ -362,12 +364,12 @@ class BinaryExpression(ctx: ParserRuleContext?, val left: BaseNode?, val operato
 
     override fun printNode(indent: String, out: File?) {
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("left: ", out)
+        printWithBuffer("left: ", out)
         left?.printParentNode(ind, out)
         super.printChildNode(indent, false, out)
         printlnWithBuffer("operator: ${operator?.value}", out)
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("right: ", out)
+        printWithBuffer("right: ", out)
         right?.printParentNode(ind, out)
     }
 }
@@ -377,12 +379,12 @@ class LogicalExpression(ctx: ParserRuleContext?, val left: BaseNode?, val operat
 
     override fun printNode(indent: String, out: File?) {
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("left: ", out)
+        printWithBuffer("left: ", out)
         left?.printParentNode(ind, out)
         super.printChildNode(indent, false, out)
         printlnWithBuffer("operator: ${operator?.value}", out)
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("right: ", out)
+        printWithBuffer("right: ", out)
         right?.printParentNode(ind, out)
     }
 }
@@ -391,12 +393,13 @@ class Property(ctx: ParserRuleContext?, val key: BaseNode?, val value: BaseNode?
     val kind = "init"
 
     override fun printNode(indent: String, out: File?) {
-        printlnWithBuffer("kind: $kind", out)
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("key: ", out)
+        printlnWithBuffer("kind: $kind", out)
+        ind = super.printChildNode(indent, false, out)
+        printWithBuffer("key: ", out)
         key?.printParentNode(ind, out)
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("value: ", out)
+        printWithBuffer("value: ", out)
         value?.printParentNode(ind, out)
     }
 }
@@ -406,10 +409,10 @@ class DoWhileStatement(ctx: ParserRuleContext?, val body: BaseNode?, val test: B
 
     override fun printNode(indent: String, out: File?) {
         var ind = super.printChildNode(indent, false, out)
-        printWithBUffer("body: ", out)
+        printWithBuffer("body: ", out)
         body?.printParentNode(ind, out)
         ind = super.printChildNode(indent, true, out)
-        printWithBUffer("test: ", out)
+        printWithBuffer("test: ", out)
         test?.printParentNode(ind, out)
     }
 }

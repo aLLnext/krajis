@@ -10,13 +10,13 @@ Program
           └─right: ObjectExpression
              └─properties
                 ├─Property
-kind: init
+                │  ├─kind: init
                 │  ├─key: Identifier
                 │  │  └─name: y
                 │  └─value: NumericLiteral
                 │     └─value: 1
                 └─Property
-kind: init
+                   ├─kind: init
                    ├─key: Identifier
                    │  └─name: y
                    └─value: NumericLiteral

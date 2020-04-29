@@ -7,7 +7,7 @@ Program
           └─right: ObjectExpression
              └─properties
                 └─Property
-kind: init
+                   ├─kind: init
                    ├─key: StringLiteral
                    │  └─value: "__proto__"
                    └─value: NumericLiteral

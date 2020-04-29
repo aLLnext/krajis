@@ -2,6 +2,7 @@ Program
  └─body
     └─ExpressionStatement
        └─expression: MemberExpression
+          ├─kind: DotMember
           ├─obj: CallExpression
           │  ├─callee: Identifier
           │  │  └─name: universe

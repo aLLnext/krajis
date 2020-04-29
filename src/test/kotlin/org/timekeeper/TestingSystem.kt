@@ -24,7 +24,7 @@ class TestingSystem {
                 val tempFile = File("${it.parent}/tempfile.res")
                 tempFile.delete()
                 val parser = Initialization().createLexerAndParser(it.readText())
-                val result = parser.program().accept(convertVisitor)
+                val result = parser?.accept(convertVisitor)
                 result?.printParentNode("", tempFile)
                 correctAnswers.add(correctFile.readText())
                 testAnswers.add(correctFile.readText())

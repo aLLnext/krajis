@@ -302,7 +302,8 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
         return MemberExpression(
             ctx,
             obj = ctx?.singleExpression()?.accept(this),
-            property = ctx?.identifierName()?.accept(this)
+            property = ctx?.identifierName()?.accept(this),
+            kind = "DotMember"
         )
     }
 
@@ -310,7 +311,8 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
         return MemberExpression(
             ctx,
             obj = ctx?.singleExpression()?.accept(this),
-            property = ctx?.expressionSequence()?.accept(this)
+            property = ctx?.expressionSequence()?.accept(this),
+            kind = "IndexMember"
         )
     }
 
@@ -368,7 +370,7 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
     }
 
     override fun visitArrowFunctionBody(ctx: JavaScriptParser.ArrowFunctionBodyContext?): BaseNode? {
-        return ctx?.functionBody()?.accept(this)
+        return ctx?.singleExpression()?.accept(this)
     }
 
     override fun visitImportStatement(ctx: JavaScriptParser.ImportStatementContext?): BaseNode? {

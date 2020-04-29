@@ -7,13 +7,13 @@ Program
           └─right: ObjectExpression
              └─properties
                 ├─Property
-kind: init
+                │  ├─kind: init
                 │  ├─key: Identifier
                 │  │  └─name: x
                 │  └─value: NumericLiteral
                 │     └─value: 1
                 └─Property
-kind: init
+                   ├─kind: init
                    ├─key: Identifier
                    │  └─name: x
                    └─value: NumericLiteral

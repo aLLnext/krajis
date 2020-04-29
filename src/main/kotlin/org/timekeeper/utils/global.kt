@@ -9,6 +9,7 @@ import java.io.File
 import java.io.PrintWriter
 
 const val REPORT_SYNTAX_ERRORS = true
+const val UPDATE_TREE = false
 const val TEST_PATH = "src/test/kotlin/org/timekeeper/test_suits/valid"
 
 const val SYMBOL_CROSS = " ├─"
@@ -67,7 +68,7 @@ fun printlnWithBuffer(string: String?, out: File? = null) {
     }
 }
 
-fun printWithBUffer(string: String?, out: File? = null) {
+fun printWithBuffer(string: String?, out: File? = null) {
     if (out != null) {
         string?.let {
             out.appendText(string)
