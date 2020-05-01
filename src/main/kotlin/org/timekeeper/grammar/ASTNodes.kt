@@ -245,7 +245,12 @@ class ArrayExpression(ctx: ParserRuleContext?, val elements: List<BaseNode?>?) :
         } else {
             printlnWithBuffer("elements", out)
             elements.forEachIndexed { index, baseNode ->
-                baseNode?.printParentNode(super.printChildNode(ind, index == elements.size - 1, out), out)
+                if (baseNode == null) {
+                    super.printChildNode(ind, index == elements.size - 1, out)
+                    printlnWithBuffer("null", out)
+                } else {
+                    baseNode.printParentNode(super.printChildNode(ind, index == elements.size - 1, out), out)
+                }
             }
         }
     }
@@ -323,7 +328,7 @@ class BreakStatement(ctx: ParserRuleContext?) : BaseNode("BreakStatement", ctx)
 
 class ReturnStatement(ctx: ParserRuleContext?, val argument: BaseNode?) : BaseNode("ReturnStatement", ctx) {
     override fun printNode(indent: String, out: File?) {
-        val ind = super.printChildNode(indent, false, out)
+        val ind = super.printChildNode(indent, true, out)
         printWithBuffer("argument: ", out)
         argument?.printParentNode(ind, out)
         if (argument == null) {

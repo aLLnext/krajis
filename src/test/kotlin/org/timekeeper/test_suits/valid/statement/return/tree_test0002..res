@@ -7,5 +7,5 @@ Program
              └─body: BlockStatement
                 └─body
                    └─ReturnStatement
-                      ├─argument: Identifier
-                      │  └─name: x
+                      └─argument: Identifier
+                         └─name: x

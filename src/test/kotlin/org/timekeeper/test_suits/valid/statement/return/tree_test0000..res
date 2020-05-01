@@ -7,4 +7,4 @@ Program
              └─body: BlockStatement
                 └─body
                    └─ReturnStatement
-                      ├─argument: null
+                      └─argument: null

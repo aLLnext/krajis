@@ -7,9 +7,9 @@ Program
              └─body: BlockStatement
                 └─body
                    └─ReturnStatement
-                      ├─argument: BinaryExpression
-                      │  ├─left: Identifier
-                      │  │  └─name: x
-                      │  ├─operator: *
-                      │  └─right: Identifier
-                      │     └─name: y
+                      └─argument: BinaryExpression
+                         ├─left: Identifier
+                         │  └─name: x
+                         ├─operator: *
+                         └─right: Identifier
+                            └─name: y

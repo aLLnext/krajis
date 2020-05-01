@@ -9,7 +9,7 @@ import java.io.File
 import java.io.PrintWriter
 
 const val REPORT_SYNTAX_ERRORS = true
-const val UPDATE_TREE = false
+const val UPDATE_TREE = true
 const val TEST_PATH = "src/test/kotlin/org/timekeeper/test_suits/valid"
 
 const val SYMBOL_CROSS = " ├─"

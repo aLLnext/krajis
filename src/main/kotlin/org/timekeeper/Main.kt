@@ -12,11 +12,12 @@ import org.timekeeper.utils.UPDATE_TREE
 import java.io.File
 
 fun main(args: Array<String>) {
-    val convertVisitor = ConvertTreeVisitor()
-    val str = "o = {x : 42, while : \"true\", \"x =\" : 4, 2 : \"is the answer\", }"
-    val tree = Initialization().createLexerAndParser(str)
-    val n = tree?.accept(convertVisitor)
-    n?.printParentNode("")
+//    val convertVisitor = ConvertTreeVisitor()
+//    val str = "x = [1, 2, , 3, 4]"
+//    val tree = Initialization().createLexerAndParser(str)
+//    val n = tree?.accept(convertVisitor)
+//    n?.printParentNode("")
+
     if (UPDATE_TREE) {
         Initialization().updateTrees()
     }

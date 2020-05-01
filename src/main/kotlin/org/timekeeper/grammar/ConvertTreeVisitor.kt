@@ -2,6 +2,7 @@ package org.timekeeper.grammar
 
 import JavaScriptParserBaseVisitor
 import org.antlr.v4.runtime.ParserRuleContext
+import org.antlr.v4.runtime.tree.TerminalNode
 import org.timekeeper.grammar.OperatorsUtils.*
 import org.timekeeper.grammar.OperatorsUtils.Companion.OPERATORS_SIGN
 import org.timekeeper.grammar.exceptions.InvalidOperationException
@@ -226,9 +227,22 @@ class ConvertTreeVisitor() : JavaScriptParserBaseVisitor<BaseNode?>() {
     }
 
     override fun visitArrayLiteral(ctx: JavaScriptParser.ArrayLiteralContext?): BaseNode? {
+        val elements = ArrayList<BaseNode?>()
+
+        val children = ctx?.elementList()?.children
+        children?.let {
+            var lastIsNull = true
+            for (i in 0 until children.size) {
+                val res = children[i].accept(this)
+                if (lastIsNull) {
+                    elements.add(res)
+                }
+                lastIsNull = res == null
+            }
+        }
         return ArrayExpression(
             ctx,
-            elements = ctx?.elementList()?.arrayElement()?.map { it.accept(this) }
+            elements = elements
         )
     }
 

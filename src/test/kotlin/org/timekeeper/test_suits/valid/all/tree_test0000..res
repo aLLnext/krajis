@@ -156,28 +156,28 @@ Program
     │  │     │  ├─body: BlockStatement
     │  │     │  │  └─body
     │  │     │  │     └─ReturnStatement
-    │  │     │  │        ├─argument: null
+    │  │     │  │        └─argument: null
     │  │     │  └─params: null
     │  │     ├─BlockStatement
     │  │     │  └─body: null
     │  │     └─ReturnStatement
-    │  │        ├─argument: FunctionExpression
-    │  │        │  ├─params
-    │  │        │  │  └─Identifier
-    │  │        │  │     └─name: x
-    │  │        │  └─body: BlockStatement
-    │  │        │     └─body
-    │  │        │        └─ReturnStatement
-    │  │        │           ├─argument: BinaryExpression
-    │  │        │           │  ├─left: BinaryExpression
-    │  │        │           │  │  ├─left: Identifier
-    │  │        │           │  │  │  └─name: a
-    │  │        │           │  │  ├─operator: *
-    │  │        │           │  │  └─right: Identifier
-    │  │        │           │  │     └─name: x
-    │  │        │           │  ├─operator: +
-    │  │        │           │  └─right: Identifier
-    │  │        │           │     └─name: b
+    │  │        └─argument: FunctionExpression
+    │  │           ├─params
+    │  │           │  └─Identifier
+    │  │           │     └─name: x
+    │  │           └─body: BlockStatement
+    │  │              └─body
+    │  │                 └─ReturnStatement
+    │  │                    └─argument: BinaryExpression
+    │  │                       ├─left: BinaryExpression
+    │  │                       │  ├─left: Identifier
+    │  │                       │  │  └─name: a
+    │  │                       │  ├─operator: *
+    │  │                       │  └─right: Identifier
+    │  │                       │     └─name: x
+    │  │                       ├─operator: +
+    │  │                       └─right: Identifier
+    │  │                          └─name: b
     │  └─params
     │     ├─Identifier
     │     │  └─name: a
@@ -294,6 +294,7 @@ Program
     │        │  └─name: a
     │        └─init: ArrayExpression
     │           └─elements
+    │              ├─null
     │              └─Identifier
     │                 └─name: x
     ├─ExpressionStatement
@@ -308,10 +309,14 @@ Program
     │     │  └─name: a
     │     └─right: ArrayExpression
     │        └─elements
+    │           ├─null
+    │           ├─null
     │           ├─Identifier
     │           │  └─name: x
-    │           └─Identifier
-    │              └─name: y
+    │           ├─null
+    │           ├─Identifier
+    │           │  └─name: y
+    │           └─null
     ├─VariableDeclaration
     │  ├─kind: var
     │  └─declarations
